@@ -1,5 +1,5 @@
 class Song{
-    constructor({name,author,album,time,path,image}){
+    constructor({name,author = "anónimo",album = name,time,path,image}){
         this.name = name;
         this.author = author;
         this.album = album;
