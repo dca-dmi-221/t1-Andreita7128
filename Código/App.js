@@ -1,6 +1,17 @@
 class App {
+    
+    
     constructor() {
         this.click = false
+
+
+        let songPrueba;
+        songPrueba = new Song({
+            name: "Cóseme",
+            author: "Beret",
+            time: 201,
+            path: 'Songs/Beret - Cóseme (LETRA).mp3'
+        })
     }
 
     show() {
@@ -11,23 +22,31 @@ class App {
             fill(180, 0, 0)
         }
         circle(450, 500, 50)
+        console.log(songPrueba.getTime())
     }
 
-    play(mx, my) {
-        let song;
-        song = loadSound('Songs/Beret - Cóseme (LETRA).mp3');
-        if (dist(mx, my, 450, 500) < 25 && this.click === false) {
-            song.play(); 
-            !this.click
-        } else if (dist(mx, my, 450, 500) < 25 && this.click === true) {
-            song.stop();
-            !this.click
-        }
+    loadSong() {
+        
+        /*let songPrueba2
+        songPrueba2= 
+        new Song({
+            name: "A escondidas",
+            author: "Lucah",
+            time: 201,
+            path: 'Songs/A Escondidas - LUCAH.mp3'
+        })*/
+
+
     }
-    getClick(){
+
+    getClick() {
         return this.click;
     }
-    setClick(newClick){
+    setClick(newClick) {
         this.click = newClick;
     }
+}
+
+function preload() {
+    song = loadSound('Songs/Beret - Cóseme (LETRA).mp3');
 }

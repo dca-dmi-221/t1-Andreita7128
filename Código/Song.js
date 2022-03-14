@@ -1,16 +1,17 @@
 class Song{
-    constructor({name,author = "anónimo",album = name,time,path,image}){
+    constructor({name,author = "anónimo",time,path}){
         this.name = name;
         this.author = author;
-        this.album = album;
         this.time = time;
         this.path = path;
-        this.image = image;
         this.playing = false;
     }
 
     play(){
         
+    }
+    getTime(){
+    return this.time
     }
 
     getPlaying(){

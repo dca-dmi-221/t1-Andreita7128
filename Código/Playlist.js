@@ -1,4 +1,5 @@
 class Playlist {
+    
     constructor() {
         this.songs = [];
         this.playing = false;
