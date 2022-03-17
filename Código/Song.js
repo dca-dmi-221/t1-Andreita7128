@@ -1,24 +1,20 @@
 class Song{
-    constructor({name,author = "anónimo",time,path}){
-        this.name = name;
-        this.author = author;
-        this.time = time;
-        this.path = path;
-        this.playing = false;
+    constructor({name,author = "anónimo", file}){
+        this._name = name;
+        this._author = author;
+        this._file = file;
     }
 
-    play(){
-        
-    }
-    getTime(){
-    return this.time
+    get name(){
+        return this._name;
     }
 
-    getPlaying(){
-        return this.playing;
+    get author(){
+        return this._author;
     }
 
-    setPlaying(newPlaying){
-        this.playing = newPlaying;
+    get file(){
+        return this._file;
     }
+    
 }

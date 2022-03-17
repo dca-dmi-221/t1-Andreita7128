@@ -1,32 +1,29 @@
 class Playlist {
     
     constructor() {
-        this.songs = [];
-        this.playing = false;
+        this._songs = [];
+        this._playing = false;
     }
 
     skip() {
-        for (let i = 0; i < songs.length; i++) {
+        for (let i = 0; i < this._songs.length; i++) {
             i++;
         }
     }
     back() {
-        for (let i = 0; i < songs.length; i++) {
+        for (let i = 0; i < this._songs.length; i++) {
             i--;
         }
     }
-    stop() {
-        this.playing = false;
-    }
     timeList() {
-        for (let i = 0; i < songs.length; i++) {
+        for (let i = 0; i < this._songs.length; i++) {
             
         }
     }
     addSong() {
-        this.songs.push(new Song())
+        this._songs.push(new Song())
     }
-    getPlaying() {
-
+    get playing() {
+        return this._playing;
     }
 }
