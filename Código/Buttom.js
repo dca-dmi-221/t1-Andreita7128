@@ -17,18 +17,28 @@ class Buttom {
 
     show() {
         noStroke();
-        if (this.click === false) {
+        if (this._click === true) {
             fill(0, 180, 0);
         } else {
-            fill(180, 0, 0)
+            fill(180, 0, 0);
         }
-        circle(450, 500, 50)
+        circle(450, 500, 50);
     }
 
-    click(mx,my){
-        if(dist(mx,my,this._x,this.y)<this._b/2){
-            !this._click;
+    clicker(mx,my){
+        if(dist(mx,my,this._x,this._y)<this._b/2){
+            this._click = !this._click;
+            console.log('click')
         }
+    }
+
+
+    get click(){
+        return this._click;
+    }
+
+    set click(newClick){
+        this._click = newClick
     }
 
     //image(this._image,this._x,this._y,this._b,this._h);

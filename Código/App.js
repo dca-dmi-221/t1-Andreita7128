@@ -3,9 +3,20 @@ const SONGS_DATA = [{
         author: "Beret",
     },
     {
-        name: "Cóseme2",
-        author: "Beret2",
-    }
+        name: "A escondidas",
+        author: "Lucah",
+    },
+    {
+        name: "Cuando se va el amor",
+        author: "Kany García",
+    },
+    {
+        name: "Perfect two",
+    },
+    {
+        name: "De ellos aprendí",
+        author: "David Rees",
+    },
 ]
 
 class App {
