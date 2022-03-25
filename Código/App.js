@@ -23,24 +23,25 @@ class App {
 
 
     constructor(preloadedFiles) {
-        this.songs = [];
+        this._songs = [];
 
         preloadedFiles.forEach((file, index) => {
-            this.songs.push(new Song({
+            this._songs.push(new Song({
                 file,
                 name: SONGS_DATA[index].name,
                 author: SONGS_DATA[index].author
             }))
         })
 
-        console.log(this.songs);
+        console.log(this._songs);
     }
 
-    click() {
-
+    showSongs(){
+        for (let i = 0; i < this._songs.length; i++) {
+            const song = this._songs[i];
+            text(this._songs.name + '(' + this._songs.author + ')', (50),(30*i)+30);
+        }
     }
 
-    loadSong() {
-    }
 
 }

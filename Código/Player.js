@@ -5,6 +5,8 @@ let sliderVolume;
 
 let buttomPlay;
 
+let screen = 0;
+
 
 
 function setup() {
@@ -23,8 +25,8 @@ function setup() {
 
 function draw() {
   background(220);
-  //app.show();
   //app.song.setVolume((sliderVolume.value()/10));
+  app.showSongs();
 
 
   buttomPlay.show();
@@ -33,19 +35,18 @@ function draw() {
 function mousePressed() {
   buttomPlay.clicker(mouseX, mouseY);
 
-console.log(songFiles)
-   if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === false) {
-     songFiles[0].play();
-  //   app.setClick(true)
-   } else if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === true) {
+  console.log(songFiles)
+  if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === false) {
+    songFiles[0].play();
+    //   app.setClick(true)
+  } else if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === true) {
     songFiles[0].pause();
-    
+
     // app.setClick(false)
-   }
+  }
 }
 
-function mouseReleased(){
-}
+function mouseReleased() {}
 
 function preload() {
   for (let i = 0; i < totalSongs; i++) {
