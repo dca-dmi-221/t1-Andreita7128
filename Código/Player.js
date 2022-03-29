@@ -1,41 +1,39 @@
 let app;
+let visual;
 const totalSongs = 5;
 const songFiles = [];
 let sliderVolume;
-
-let buttomPlay;
 
 let screen = 0;
 
 
 
 function setup() {
-  createCanvas(900, 600);
+  createCanvas(1280, 720);
   app = new App(songFiles);
-  sliderVolume = createSlider(-1, 10);
-  sliderVolume.position(700, 500);
+  visual = new Visual(screen);
 
-  buttomPlay = new Buttom({
-    x: 450,
-    y: 500,
-    b: 50,
-    h: 50
-  });
+  
+
 }
 
 function draw() {
   background(220);
   //app.song.setVolume((sliderVolume.value()/10));
   app.showSongs();
+    visual.screen0();
+    visual.screen1();
+    visual.screen2();
+  
 
 
-  buttomPlay.show();
 }
 
 function mousePressed() {
-  buttomPlay.clicker(mouseX, mouseY);
 
-  console.log(songFiles)
+  visual.click0(mouseX,mouseY,screen);
+
+  /*console.log(songFiles)
   if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === false) {
     songFiles[0].play();
     //   app.setClick(true)
@@ -43,7 +41,7 @@ function mousePressed() {
     songFiles[0].pause();
 
     // app.setClick(false)
-  }
+  }*/
 }
 
 function mouseReleased() {}
