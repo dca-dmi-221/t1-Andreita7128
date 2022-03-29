@@ -72,6 +72,12 @@ class Visual {
             }
         }
     }
+
+    clickHome(mx,my){
+        if (this._home.clicker2(mx,my)) {
+            this._screen = 0;
+        }
+    }
 }
 
 //sliderVolume = createSlider(-1, 10);

@@ -31,7 +31,8 @@ function draw() {
 
 function mousePressed() {
 
-  visual.click0(mouseX,mouseY,screen);
+  visual.click0(mouseX,mouseY);
+  visual.clickHome(mouseX,mouseY)
 
   /*console.log(songFiles)
   if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === false) {

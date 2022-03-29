@@ -23,6 +23,10 @@ class Buttom {
         return dist(mx, my, this._x, this._y) < this._b / 2;
     }
 
+    clicker2(mx, my) {
+        return mx > this._x && mx < (this._x + this._b) && my > this._y && my < (this._y + this._h);
+    }
+
 
     get click() {
         return this._click;
