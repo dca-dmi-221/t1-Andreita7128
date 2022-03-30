@@ -24,10 +24,11 @@ class App {
 
     constructor(preloadedFiles) {
         this._songs = [];
-        this._visual = new Visual(screen);
+        this._visual = new Visual(0);
 
-        preloadedFiles.forEach((element, index) => {
+        preloadedFiles.forEach((file, index) => {
             this._songs.push(new Song({
+                file,
                 name: SONGS_DATA[index].name,
                 author: SONGS_DATA[index].author
             }))
@@ -46,6 +47,8 @@ class App {
     pressed() {
         this._visual.click0(mouseX, mouseY);
         this._visual.clickHome(mouseX, mouseY);
+        this._visual.clickHome(mouseX,mouseY);
+        this._visual.clickUploadSong(mouseX,mouseY);
     }
 
 
@@ -54,8 +57,8 @@ class App {
             for (let i = 0; i < this._songs.length; i++) {
                 const song = this._songs[i];
                 fill(255)
-                textSize(30);
-                text(song.name + ' (' + song.author + ')', (50), (40 * i) + 300);
+                textSize(15);
+                text(song.name + ' (' + song.author + ') ' + (song.file.duration()/60).toFixed(2) + 'min', (50), (40 * i) + 300);
             }
         }
     }
@@ -63,7 +66,10 @@ class App {
 
     clickSong(){
         this._songs.forEach(element => {
-        });
+            if(element.click()){
+                console.log("click")
+            }
+                });
     }
     
 

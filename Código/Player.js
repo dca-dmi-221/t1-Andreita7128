@@ -4,7 +4,6 @@ const totalSongs = 5;
 const songFiles = [];
 let sliderVolume;
 
-let screen = 0;
 
 
 
@@ -15,6 +14,7 @@ function setup() {
 
 
 
+
 }
 
 function draw() {
@@ -22,6 +22,7 @@ function draw() {
   //app.song.setVolume((sliderVolume.value()/10));
 
   app.draw();
+
 
 
 }

@@ -9,22 +9,32 @@ class Visual {
         this._home = new Buttom({
             x: 30,
             y: 30,
-            b: 320,
-            h: 320,
+            b: 334,
+            h: 170,
             image: loadImage('./Images/home.png')
         })
-        this._buttom1 = new Buttom({
+        this._buttomSongs = new Buttom({
             x: 710,
             y: 460,
             b: 320,
             image: loadImage('./Images/ButtomSongs.png')
         })
-        this._buttom2 = new Buttom({
+        this._buttomPlaylist = new Buttom({
             x: 1085,
             y: 460,
             b: 320,
             image: loadImage('./Images/ButtomPlaylist.png')
         })
+
+        this._buttomUploadSong = new Buttom({
+            x: 895,
+            y: 63,
+            b: 342,
+            h: 85,
+            image: loadImage('./Images/Upload.png')
+        })
+
+        
     }
 
     screen0() {
@@ -32,8 +42,8 @@ class Visual {
             image(this._bg, 0, 0);
             this._home.show()
             imageMode(CENTER);
-            this._buttom1.show();
-            this._buttom2.show();
+            this._buttomSongs.show();
+            this._buttomPlaylist.show();
             imageMode(CORNER);
             fill(230);
             textSize(50);
@@ -48,6 +58,7 @@ class Visual {
         if(this._screen === 1){
             image(this._bg2,0,0);
             this._home.show()
+            this._buttomUploadSong.show();
         }
     }
 
@@ -61,11 +72,10 @@ class Visual {
 
     click0(mx, my) {
         if (this._screen === 0) {
-            if (this._buttom1.clicker(mx, my)) {
+            if (this._buttomSongs.clicker(mx, my)) {
                 this._screen = 1;
-                console.log("click")
             }
-            if (this._buttom2.clicker(mx, my)) {
+            if (this._buttomPlaylist.clicker(mx, my)) {
                 this._screen = 2;
             }
         }
@@ -74,6 +84,13 @@ class Visual {
     clickHome(mx,my){
         if (this._home.clicker2(mx,my)) {
             this._screen = 0;
+        }
+    }
+
+    clickUploadSong(mx,my){
+        if(this._buttomUploadSong.clicker2(mx,my)){
+            const input = document.querySelector('#load-song');
+            input.click();
         }
     }
 
