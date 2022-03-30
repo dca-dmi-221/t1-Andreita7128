@@ -4,7 +4,7 @@ class Buttom {
         x,
         y,
         b,
-        h,
+        h = b,
         image
     }) {
         this._x = x;
@@ -12,7 +12,6 @@ class Buttom {
         this._b = b;
         this._h = h;
         this._image = image;
-        this._click = false
     }
 
     show() {
@@ -25,15 +24,6 @@ class Buttom {
 
     clicker2(mx, my) {
         return mx > this._x && mx < (this._x + this._b) && my > this._y && my < (this._y + this._h);
-    }
-
-
-    get click() {
-        return this._click;
-    }
-
-    set click(newClick) {
-        this._click = newClick
     }
 
 

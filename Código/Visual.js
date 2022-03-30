@@ -2,30 +2,28 @@ class Visual {
 
     constructor(screen) {
         this._screen = screen;
-        this._bg = loadImage('/Images/Bg1.jpg');
-        this._bg2 = loadImage('/Images/Bg2.jpg');
-        this._bg3 = loadImage('/Images/Bg3.jpg');
-        this._bg4 = loadImage('/Images/Bg4.jpg');
+        this._bg = loadImage('./Images/Bg1.jpg');
+        this._bg2 = loadImage('./Images/Bg2.jpg');
+        this._bg3 = loadImage('./Images/Bg3.jpg');
+        this._bg4 = loadImage('./Images/Bg4.jpg');
         this._home = new Buttom({
             x: 30,
             y: 30,
             b: 320,
             h: 320,
-            image: loadImage('/Images/home.png')
+            image: loadImage('./Images/home.png')
         })
         this._buttom1 = new Buttom({
             x: 710,
             y: 460,
             b: 320,
-            h: 320,
-            image: loadImage('/Images/ButtomSongs.png')
+            image: loadImage('./Images/ButtomSongs.png')
         })
         this._buttom2 = new Buttom({
             x: 1085,
             y: 460,
             b: 320,
-            h: 320,
-            image: loadImage('/Images/ButtomPlaylist.png')
+            image: loadImage('./Images/ButtomPlaylist.png')
         })
     }
 
@@ -77,6 +75,14 @@ class Visual {
         if (this._home.clicker2(mx,my)) {
             this._screen = 0;
         }
+    }
+
+    get screen(){
+        return this._screen;
+    }
+
+    set screen(newScreen){
+        this._screen = newScreen;
     }
 }
 

@@ -8,31 +8,26 @@ let screen = 0;
 
 
 
+
 function setup() {
   createCanvas(1280, 720);
   app = new App(songFiles);
-  visual = new Visual(screen);
 
-  
+
 
 }
 
 function draw() {
   background(220);
   //app.song.setVolume((sliderVolume.value()/10));
-  app.showSongs();
-    visual.screen0();
-    visual.screen1();
-    visual.screen2();
-  
+
+  app.draw();
 
 
 }
 
 function mousePressed() {
-
-  visual.click0(mouseX,mouseY);
-  visual.clickHome(mouseX,mouseY)
+  app.pressed();
 
   /*console.log(songFiles)
   if (dist(mouseX, mouseY, 450, 500) < 25 && buttomPlay.click === false) {

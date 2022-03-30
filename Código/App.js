@@ -24,10 +24,10 @@ class App {
 
     constructor(preloadedFiles) {
         this._songs = [];
+        this._visual = new Visual(screen);
 
-        preloadedFiles.forEach((file, index) => {
+        preloadedFiles.forEach((element, index) => {
             this._songs.push(new Song({
-                file,
                 name: SONGS_DATA[index].name,
                 author: SONGS_DATA[index].author
             }))
@@ -36,12 +36,36 @@ class App {
         console.log(this._songs);
     }
 
-    showSongs(){
-        for (let i = 0; i < this._songs.length; i++) {
-            const song = this._songs[i];
-            text(this._songs.name + '(' + this._songs.author + ')', (50),(30*i)+30);
+    draw() {
+        this._visual.screen0();
+        this._visual.screen1();
+        this._visual.screen2();
+        this.showSongs();
+    }
+
+    pressed() {
+        this._visual.click0(mouseX, mouseY);
+        this._visual.clickHome(mouseX, mouseY);
+    }
+
+
+    showSongs() {
+        if (this._visual.screen === 1) {
+            for (let i = 0; i < this._songs.length; i++) {
+                const song = this._songs[i];
+                fill(255)
+                textSize(30);
+                text(song.name + ' (' + song.author + ')', (50), (40 * i) + 300);
+            }
         }
     }
+    
+
+    clickSong(){
+        this._songs.forEach(element => {
+        });
+    }
+    
 
 
 }
