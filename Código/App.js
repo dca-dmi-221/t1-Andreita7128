@@ -25,6 +25,16 @@ class App {
     constructor(preloadedFiles) {
         this._songs = [];
         this._visual = new Visual(0);
+        const input = document.querySelector('#load-song');
+
+        input.addEventListener('change', () => {
+            const url = URL.createObjectURL(input.files[0]);
+            const sound = loadSound(url, () => {
+                const name = window.prompt("Nombre de la canción") || "";
+                const author = window.prompt("Autor de la canción") || "";
+                this._songs.push(new Song({file: sound, name, author}));
+            })
+        });
 
         preloadedFiles.forEach((file, index) => {
             this._songs.push(new Song({
