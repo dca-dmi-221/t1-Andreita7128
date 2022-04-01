@@ -1,8 +1,15 @@
 class Playlist {
     
-    constructor() {
+    constructor({songs}) {
         this._songs = [];
         this._playing = false;
+        this._songs.push(songs)
+        console.log(this._songs)
+
+    }
+
+    show(){
+
     }
 
     skip() {
@@ -20,8 +27,8 @@ class Playlist {
             
         }
     }
-    addSong() {
-        this._songs.push(new Song())
+    addSong(song) {
+        this._songs.push(song)
     }
     get playing() {
         return this._playing;

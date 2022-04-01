@@ -88,7 +88,7 @@ class Visual {
     }
 
     clickUploadSong(mx,my){
-        if(this._buttomUploadSong.clicker2(mx,my)){
+        if(this._buttomUploadSong.clicker2(mx,my) && this._screen === 1){
             const input = document.querySelector('#load-song');
             input.click();
         }

@@ -17,6 +17,10 @@ const SONGS_DATA = [{
         name: "De ellos aprendí",
         author: "David Rees",
     },
+    {
+        name: "Count on Me",
+        author: 'Bruno Mars'
+    }
 ]
 
 class App {
@@ -25,6 +29,11 @@ class App {
     constructor(preloadedFiles) {
         this._songs = [];
         this._visual = new Visual(0);
+        this._playlist1Songs = [];
+        this._playlist2Songs = [];
+        this._playlist1 = new Playlist(this._playlist1Songs);
+        this._playlist2 = new Playlist(this._playlist2Songs);
+
         const input = document.querySelector('#load-song');
 
         input.addEventListener('change', () => {
@@ -32,7 +41,11 @@ class App {
             const sound = loadSound(url, () => {
                 const name = window.prompt("Nombre de la canción") || "";
                 const author = window.prompt("Autor de la canción") || "";
-                this._songs.push(new Song({file: sound, name, author}));
+                this._songs.push(new Song({
+                    file: sound,
+                    name,
+                    author
+                }));
             })
         });
 
@@ -40,11 +53,22 @@ class App {
             this._songs.push(new Song({
                 file,
                 name: SONGS_DATA[index].name,
-                author: SONGS_DATA[index].author
+                author: SONGS_DATA[index].author,
+                x: 50,
+                y: (40*index)
             }))
         })
 
-        console.log(this._songs);
+        this._playlist1Songs.push(this._songs[0]);
+        this._playlist1Songs.push(this._songs[2])
+        this._playlist1Songs.push(this._songs[4])
+
+
+        this._playlist2Songs.push(this._songs[1])
+        this._playlist2Songs.push(this._songs[3])
+        this._playlist2Songs.push(this._songs[5])
+
+        console.log(this._playlist1);
     }
 
     draw() {
@@ -57,8 +81,9 @@ class App {
     pressed() {
         this._visual.click0(mouseX, mouseY);
         this._visual.clickHome(mouseX, mouseY);
-        this._visual.clickHome(mouseX,mouseY);
-        this._visual.clickUploadSong(mouseX,mouseY);
+        this._visual.clickHome(mouseX, mouseY);
+        this._visual.clickUploadSong(mouseX, mouseY);
+        this.clickSong(mouseX, mouseY);
     }
 
 
@@ -66,22 +91,24 @@ class App {
         if (this._visual.screen === 1) {
             for (let i = 0; i < this._songs.length; i++) {
                 const song = this._songs[i];
-                fill(255)
-                textSize(15);
-                text(song.name + ' (' + song.author + ') ' + (song.file.duration()/60).toFixed(2) + 'min', (50), (40 * i) + 300);
+                song.show(50, (40 * i));
             }
         }
     }
-    
 
-    clickSong(){
-        this._songs.forEach(element => {
-            if(element.click()){
-                console.log("click")
+
+    clickSong(mx, my) {
+        if (this._visual.screen === 1) {
+            for (let i = 0; i < this._songs.length; i++) {
+                const song = this._songs[i];
+                if (song.clicker(mx, my) === true) {
+                    console.log('click')
+                }
             }
-                });
     }
-    
+
+}
+
 
 
 }

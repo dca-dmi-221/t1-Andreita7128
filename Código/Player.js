@@ -1,6 +1,5 @@
 let app;
-let visual;
-const totalSongs = 5;
+const totalSongs = 6;
 const songFiles = [];
 let sliderVolume;
 
