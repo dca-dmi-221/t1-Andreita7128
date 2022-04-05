@@ -9,7 +9,7 @@ class Visual {
         this._bg2 = loadImage('./Images/bg2.jpg');
         this._bg3 = loadImage('./Images/bg3.jpg');
         this._bg4 = loadImage('./Images/bg4.jpg');
-        this._pauseImage = loadImage('./Images/pause.png');
+        this._playImage = loadImage('./Images/play.png');
 
         this._home = new Buttom({
             x: 30,
@@ -35,7 +35,7 @@ class Visual {
             x: 980,
             y: 635,
             b: 35,
-            image: this._pauseImage
+            image: this._playImage
         });
         this._next = new Buttom({
             x: 1015,
@@ -51,8 +51,8 @@ class Visual {
             image: loadImage('./Images/close.png')
         });
         this._accessPlayer = new Buttom({
-            x: 1215,
-            y: 675,
+            x: 1240,
+            y: 685,
             b: 35,
             image: loadImage('./Images/open.png')
         });
@@ -105,7 +105,7 @@ class Visual {
         this.screen1();
         this.screen2();
         this.screen3();
-        this._home.showCorner(); 
+        this._home.showCorner();
         this.openMiniPlayer();
 
     }
@@ -115,12 +115,6 @@ class Visual {
             image(this._bg, 0, 0);
             this._buttomSongs.showCenter();
             this._buttomPlaylist.showCenter();
-            fill(230);
-            textSize(50);
-            text('¿Qué quieres reproducir?', 600, 150);
-            textSize(35);
-            text('Canciones', 630, 585);
-            text('Playlist', 1030, 585);
         }
     }
 
@@ -132,8 +126,8 @@ class Visual {
     }
 
     screen2() {
-        if(this._screen === 2){
-            image(this._bg3,0,0);
+        if (this._screen === 2) {
+            image(this._bg3, 0, 0);
         }
     }
 
@@ -146,8 +140,8 @@ class Visual {
         }
     }
 
-    openMiniPlayer(){
-        if(this._miniPlayerOpen === true){
+    openMiniPlayer() {
+        if (this._miniPlayerOpen === true) {
             this._miniPlayer.showCorner();
             this._closePlayer.showCenter();
             this._next.showCorner();
@@ -155,22 +149,21 @@ class Visual {
             this._play.showCorner();
             this._sliderVolume.position(1115, 645);
 
-        } else{
+        } else {
             this._accessPlayer.showCenter();
         }
     }
 
-    changeImage(newImage){
-        if(this._pauseSong === false && this._play.clicker(mouseX,mouseY)){
-        this._play.image = newImage;
-        } else {
-            this._play.image = this._playImage;
-        }
-    }
-
-    clickPlay(mx,my){
-        if(this._play.clicker(mx,my)){
-            _
+    clickPlay(mx, my, newImage, song) {
+        if (song.isPlaying()) {
+                if (this._play.clicker2(mx, my) && this._pauseSong === false) {
+                    console.log("holi")
+                    this._pauseSong = true;
+                    this._play.image = newImage;
+                } 
+            } else {
+                this._play.image = this._playImage;
+                this._pauseSong = false;
         }
     }
 
@@ -198,27 +191,22 @@ class Visual {
         }
     }
 
-    clickOpen(mx, my){
-        if(this._accessPlayer.clicker(mx,my)){
+    clickOpen(mx, my) {
+        if (this._accessPlayer.clicker(mx, my)) {
             this._miniPlayerOpen = true;
         }
     }
 
-    clickClose(mx, my){
-        if(this._closePlayer.clicker(mx,my)){
+    clickClose(mx, my) {
+        if (this._closePlayer.clicker(mx, my)) {
             this._miniPlayerOpen = false;
         }
     }
 
-    clickPause(mx, my, newImage){
-        if (this._play.clicker(mx,my)){
-            this.changeImage(newImage)
-        }
-    }
 
 
 
-    get miniPlayerOpen(){
+    get miniPlayerOpen() {
         return this._miniPlayerOpen;
     }
 
@@ -234,6 +222,5 @@ class Visual {
         this._screen = newScreen;
     }
 
-    
-}
 
+}

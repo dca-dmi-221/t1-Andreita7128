@@ -1,3 +1,4 @@
+// arreglo con los datos de las canciones
 const SONGS_DATA = [{
         name: "Cóseme",
         author: "Beret",
@@ -25,28 +26,26 @@ const SONGS_DATA = [{
 
 class App {
 
-
     constructor(preloadedFiles) {
-        this._songs = [];
-        this._playSong = undefined;
-        this._butomsSong = [];
+        this._songs = []; //arreglo para mostrar las canciones en general
+        this._playSong = undefined; //canción sonando actualmente
         this._visual = new Visual(0);
-        this._playImage = loadImage('./Images/play.png');
+        this._pauseImage = loadImage('./Images/pause.png');
         this._playlist1Songs = [];
         this._playlist2Songs = [];
         this._playlist1 = []
-        this._songs.forEach((song,index) => {
+        /*this._songs.forEach((song,index) => {
             if(index % 2 === 0){
                 this._playlist1.push(new PluginArray)
             }
             
-        });
+        });*/
 
         this._playlist2 = new Playlist(this._playlist2Songs);
 
-        const input = document.querySelector('#load-song');
+        const input = document.querySelector('#load-song'); //para abrir el explorador
 
-        input.addEventListener('change', () => {
+        input.addEventListener('change', () => { // para cargar y guardar las canciones con nombre y artista
             const url = URL.createObjectURL(input.files[0]);
             const sound = loadSound(url, () => {
                 const name = window.prompt("Nombre de la canción") || "";
@@ -59,13 +58,13 @@ class App {
             })
         });
 
-        preloadedFiles.forEach((file, index) => {
+        preloadedFiles.forEach((file, index) => { // para cargar todo antes de que inicie el programa
             this._songs.push(new Song({
                 file,
                 name: SONGS_DATA[index].name,
                 author: SONGS_DATA[index].author,
-                x: 50,
-                y: (30 * index)
+                x: undefined,
+                y: undefined
             }))
         })
 
@@ -83,7 +82,6 @@ class App {
 
     draw() {
         this._visual.screens();
-        this.buttomsSongs();
         this.showSongs();
     }
 
@@ -94,52 +92,31 @@ class App {
         this._visual.clickUploadSong(mouseX, mouseY);
         this._visual.clickOpen(mouseX, mouseY);
         this._visual.clickClose(mouseX, mouseY);
-        this._visual.changeImage(this._playImage);
-
+        //  this._visual.clickPlay(mouseX, mouseY, this._pauseImage, this._playSong);
         this.clickerSong();
-        
     }
-
-    buttomsSongs() {
-        if (this._visual.screen === 1) {
-            this.createButtomsSong();
-            this.showButtomsSongs();
-        }
-    }
-
 
     showSongs() {
         if (this._visual.screen === 1) {
             for (let i = 0; i < this._songs.length; i++) {
                 const song = this._songs[i];
-                song.show();
+                // if(i % 15 === 0){
+                song.x = 40;
+                song.y = (30 * i) + 270;
+                fill(255)
+                textSize(15);
+                text(song.name + ' (' + song.author + ') ' + (song.file.duration() / 60).toFixed(2) + 'min', song.x, song.y);
             }
         }
     }
 
-    createButtomsSong() {
-        for (let i = 0; i < this._songs.length; i++) {
-            this._butomsSong.push(new Buttom({
-                x: 45,
-                y: (30 * i) + 235,
-                b: 350,
-                h: 20
-            }))
-        }
-    }
-
-    showButtomsSongs() {
-        this._butomsSong.forEach((buttom) => {
-            buttom.show2();
-        });
-    }
-
     clickerSong() {
         if (this._visual.screen === 1) {
-            for (let i = 0; i < this._butomsSong.length; i++) {
-                const buttom = this._butomsSong[i];
-                if (buttom.clicker2(mouseX, mouseY)) {
-                    this._playSong = this._songs[i].file.play();
+            for (let i = 0; i < this._songs.length; i++) {
+                const song = this._songs[i];
+                if (song.clicker(mouseX, mouseY)) {
+                    this._playSong = this._songs[i].file;
+                    this._playSong.play();
                     this._visual.miniPlayerOpen = true;
                 }
             }
@@ -147,7 +124,7 @@ class App {
 
     }
 
-    
+
 
 
 }

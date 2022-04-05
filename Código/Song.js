@@ -11,15 +11,19 @@ class Song {
         this._file = file;
         this._x = x;
         this._y = y;
-        this._b = String(this.name).length * 5
+        this._b = undefined
         this._h = 20;
+        this.lengthClick();
 
     }
 
-    show() {
-        fill(255)
-        textSize(15);
-        text(this._name + ' (' + this._author + ') ' + (this._file.duration() / 60).toFixed(2) + 'min', this._x, this._y + 250);
+    
+    clicker(mx, my) {
+        return mx > this._x && mx < (this._x + this._b) && my > this._y - 20 && my < ((this._y - 20) + this._h);
+    }
+
+    lengthClick(){
+       this._b = (String(this.name).length * 15) + (String(this.author).length * 15)
     }
 
     get x(){
@@ -42,4 +46,10 @@ class Song {
         return this._file;
     }
 
+    set x(newX){
+        this._x = newX;
+    }
+    set y(newY){
+        this._y = newY;
+    }
 }
