@@ -80,27 +80,13 @@ class Visual {
             b: 217,
             image: loadImage('./Images/add.png')
         });
-
-        this._playlist1 = new Buttom({
-            x: 760,
-            y: 140,
-            b: 217,
-            image: loadImage('./Images/playlist1.png')
-        });
-
-        this._playlist2 = new Buttom({
-            x: 1000,
-            y: 140,
-            b: 77,
-            image: loadImage('./Images/playlist2.png')
-        });
-
     }
 
     screens() {
         this.screen0();
         this.screen1();
         this.screen2();
+        this.screen3();
         this._home.showCorner();
         this.openMiniPlayer();
 
@@ -124,9 +110,13 @@ class Visual {
     screen2() {
         if (this._screen === 2) {
             image(this._bg4, 0, 0);
-            this._playlist1.showCenter();
-            this._playlist2.showCenter();
             this._add.showCenter();
+        }
+    }
+
+    screen3() {
+        if (this._screen === 3) {
+            image(this._bg3, 0, 0);
         }
     }
 

@@ -27,34 +27,8 @@ const SONGS_DATA = [{
 class App {
 
     constructor(preloadedFiles) {
+
         this._songs = []; //arreglo para mostrar las canciones en general
-        this._allPlaylist = [];
-        this._playSong = undefined; //canción sonando actualmente
-        this._visual = new Visual(0);
-        this._sliderVolume = createSlider(0,1,0.5,0.01);
-
-        this._playlist1Songs = [];
-        this._playlist2Songs = [];
-
-        this._playlist1Songs.push(this._songs[0]);
-        this._playlist1Songs.push(this._songs[2]);
-        this._playlist1Songs.push(this._songs[4]);
-
-        this._playlist2Songs.push(this._songs[1]);
-        this._playlist2Songs.push(this._songs[3]);
-        this._playlist2Songs.push(this._songs[5]);
-
-        this._playlist1 = new Playlist({
-            songs: this._playlist1Songs,
-            name: `Playlist 1`
-        })
-        this._playlist2 = new Playlist({
-            songs: this._playlist2Songs,
-            name: `Playlist2`
-        });
-
-        this._allPlaylist.push(this._playlist1);
-        this._allPlaylist.push(this._playlist2);
 
 
         const input = document.querySelector('#load-song'); //para abrir el explorador
@@ -82,7 +56,34 @@ class App {
             }))
         })
 
-        
+        this._allPlaylist = [];
+        this._playSong = undefined; //canción sonando actualmente
+        this._playlistActual = undefined;
+        this._visual = new Visual(0);
+        this._sliderVolume = createSlider(0, 1, 0.5, 0.01);
+
+        this._playlist1Songs = [];
+        this._playlist2Songs = [];
+
+        this._playlist1Songs.push(this._songs[0]);
+        this._playlist1Songs.push(this._songs[2]);
+        this._playlist1Songs.push(this._songs[4]);
+
+        this._playlist2Songs.push(this._songs[1]);
+        this._playlist2Songs.push(this._songs[3]);
+        this._playlist2Songs.push(this._songs[5]);
+
+        this._playlist1 = new Playlist({
+            songs: this._playlist1Songs,
+            name: `Playlist 1`
+        })
+        this._playlist2 = new Playlist({
+            songs: this._playlist2Songs,
+            name: `Playlist2`
+        });
+
+        this._allPlaylist.push(this._playlist1);
+        this._allPlaylist.push(this._playlist2);
 
         console.log(this._playlist1);
     }
@@ -91,6 +92,8 @@ class App {
         this._visual.screens();
         this.showSongs();
         this.infoMiniPlayer();
+        this.showPlaylist();
+        this.showSongsPlaylist();
     }
 
     pressed() {
@@ -102,6 +105,7 @@ class App {
         this._visual.clickClose(mouseX, mouseY);
         this.clickerSong();
         this.pauseSong();
+        this.clickerPlaylist();
     }
 
     showSongs() {
@@ -112,6 +116,7 @@ class App {
                 song.x = 40;
                 song.y = (30 * i) + 270;
                 fill(255)
+                textAlign(CORNER, CORNER);
                 textSize(15);
                 text(`${song.name} (${song.author}) ${(song.file.duration() / 60).toFixed(2)} min`, song.x, song.y);
             }
@@ -156,14 +161,56 @@ class App {
                 text((this._playSong.file.duration() / 60).toFixed(2), 1250, 688);
                 this._playSong.file.setVolume((this._sliderVolume.value()));
             }
-        } 
-    }
-
-    closeSlider(){
-        if(this._visual.miniPlayerOpen === false){
-            this._sliderVolume.style(`display`,`none`);
         }
     }
-    
+
+    closeSlider() {
+        if (this._visual.miniPlayerOpen === false) {
+            this._sliderVolume.style(`display`, `none`);
+        }
+    }
+
+    showPlaylist() {
+        if (this._visual.screen === 2) {
+            this._allPlaylist.forEach((playlist, i) => {
+                playlist.x = (240 * i) + 760;
+                playlist.y = 140;
+                playlist.show();
+            })
+        }
+    }
+
+    clickerPlaylist() {
+        if (this._visual.screen === 2) {
+            this._allPlaylist.forEach(playlist => {
+                if (playlist.clicker(mouseX, mouseY)) {
+                    this._visual.screen = 3;
+                    this._playlistActual = playlist;
+                }
+            });
+        }
+    }
+
+    showSongsPlaylist() {
+        if (this._visual.screen === 3) {
+            this._playlistActual.songs.forEach((song,i) => {
+                // if(i % 15 === 0){
+            song.x = 40;
+            song.y = (30 * i) + 270;
+            fill(255)
+            textAlign(CORNER, CORNER);
+            textSize(15);
+            text(`${song.name} (${song.author}) ${(song.file.duration() / 60).toFixed(2)} min`, song.x, song.y);
+            });
+            
+        }
+    }
 
 }
+
+// this._playSong = playlist[i]
+//                     if (this._playSong !== undefined) {
+//                         this._playSong.file.stop();
+//                     }
+//                     this._playSong.file.play();
+//                     this._visual.miniPlayerOpen = true;

@@ -9,8 +9,6 @@ function setup() {
 
 function draw() {
   background(220);
-  //app.song.setVolume((sliderVolume.value()/10));
-
   app.draw();
 }
 

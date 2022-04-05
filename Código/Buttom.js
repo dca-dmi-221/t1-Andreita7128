@@ -30,10 +30,4 @@ class Buttom {
         return mx > this._x && mx < (this._x + this._b) && my > this._y && my < (this._y + this._h);
     }
 
-    
-
-    set image(newValue) {
-        this._image = newValue;
-    }
-
 }
