@@ -16,19 +16,11 @@ class Song {
 
     }
 
-    /* click(mx,my){
-            return mx > this._x && mx < (this._x + (String(this._name.lenght) * 5)) && my > this._y && my < (this._y + 20);
-            }*/
     show() {
         fill(255)
         textSize(15);
-        text(this._name + ' (' + this._author + ') ' + (this._file.duration() / 60).toFixed(2) + 'min', this._x, this._y + 300);
+        text(this._name + ' (' + this._author + ') ' + (this._file.duration() / 60).toFixed(2) + 'min', this._x, this._y + 250);
     }
-
-    clicker(mx,my){
-        return mx > this._x && mx < (this._x + this._b) &&  my > this._y && my < this._h;
-    }
-
 
     get x(){
         return this._x;

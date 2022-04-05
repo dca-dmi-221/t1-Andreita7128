@@ -28,10 +28,20 @@ class App {
 
     constructor(preloadedFiles) {
         this._songs = [];
+        this._playSong = undefined;
+        this._butomsSong = [];
         this._visual = new Visual(0);
+        this._playImage = loadImage('./Images/play.png');
         this._playlist1Songs = [];
         this._playlist2Songs = [];
-        this._playlist1 = new Playlist(this._playlist1Songs);
+        this._playlist1 = []
+        this._songs.forEach((song,index) => {
+            if(index % 2 === 0){
+                this._playlist1.push(new PluginArray)
+            }
+            
+        });
+
         this._playlist2 = new Playlist(this._playlist2Songs);
 
         const input = document.querySelector('#load-song');
@@ -55,7 +65,7 @@ class App {
                 name: SONGS_DATA[index].name,
                 author: SONGS_DATA[index].author,
                 x: 50,
-                y: (40*index)
+                y: (30 * index)
             }))
         })
 
@@ -72,9 +82,8 @@ class App {
     }
 
     draw() {
-        this._visual.screen0();
-        this._visual.screen1();
-        this._visual.screen2();
+        this._visual.screens();
+        this.buttomsSongs();
         this.showSongs();
     }
 
@@ -83,7 +92,19 @@ class App {
         this._visual.clickHome(mouseX, mouseY);
         this._visual.clickHome(mouseX, mouseY);
         this._visual.clickUploadSong(mouseX, mouseY);
-        this.clickSong(mouseX, mouseY);
+        this._visual.clickOpen(mouseX, mouseY);
+        this._visual.clickClose(mouseX, mouseY);
+        this._visual.changeImage(this._playImage);
+
+        this.clickerSong();
+        
+    }
+
+    buttomsSongs() {
+        if (this._visual.screen === 1) {
+            this.createButtomsSong();
+            this.showButtomsSongs();
+        }
     }
 
 
@@ -91,24 +112,42 @@ class App {
         if (this._visual.screen === 1) {
             for (let i = 0; i < this._songs.length; i++) {
                 const song = this._songs[i];
-                song.show(50, (40 * i));
+                song.show();
             }
         }
     }
 
-
-    clickSong(mx, my) {
-        if (this._visual.screen === 1) {
-            for (let i = 0; i < this._songs.length; i++) {
-                const song = this._songs[i];
-                if (song.clicker(mx, my) === true) {
-                    console.log('click')
-                }
-            }
+    createButtomsSong() {
+        for (let i = 0; i < this._songs.length; i++) {
+            this._butomsSong.push(new Buttom({
+                x: 45,
+                y: (30 * i) + 235,
+                b: 350,
+                h: 20
+            }))
+        }
     }
 
-}
+    showButtomsSongs() {
+        this._butomsSong.forEach((buttom) => {
+            buttom.show2();
+        });
+    }
 
+    clickerSong() {
+        if (this._visual.screen === 1) {
+            for (let i = 0; i < this._butomsSong.length; i++) {
+                const buttom = this._butomsSong[i];
+                if (buttom.clicker2(mouseX, mouseY)) {
+                    this._playSong = this._songs[i].file.play();
+                    this._visual.miniPlayerOpen = true;
+                }
+            }
+        }
+
+    }
+
+    
 
 
 }
