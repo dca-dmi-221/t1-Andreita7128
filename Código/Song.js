@@ -13,7 +13,9 @@ class Song {
         this._y = y;
         this._b = undefined
         this._h = 20;
+        this._playing = false;
         this.lengthClick();
+
 
     }
 
@@ -45,11 +47,17 @@ class Song {
     get file() {
         return this._file;
     }
+    get playing() {
+        return this._playing;
+    }
 
     set x(newX){
         this._x = newX;
     }
     set y(newY){
         this._y = newY;
+    }
+    set playing(newP){
+        this._playing = newP;
     }
 }

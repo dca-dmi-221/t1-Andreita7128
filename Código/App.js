@@ -92,7 +92,7 @@ class App {
         this._visual.clickUploadSong(mouseX, mouseY);
         this._visual.clickOpen(mouseX, mouseY);
         this._visual.clickClose(mouseX, mouseY);
-        //  this._visual.clickPlay(mouseX, mouseY, this._pauseImage, this._playSong);
+        this._visual.clickPlay(mouseX,mouseY,this._pauseImage,this._playSong);
         this.clickerSong();
     }
 
@@ -115,16 +115,14 @@ class App {
             for (let i = 0; i < this._songs.length; i++) {
                 const song = this._songs[i];
                 if (song.clicker(mouseX, mouseY)) {
-                    this._playSong = this._songs[i].file;
-                    this._playSong.play();
+                    this._playSong = this._songs[i];
+                    this._playSong.file.play();
+                    this._playSong.playing = true;
                     this._visual.miniPlayerOpen = true;
                 }
             }
         }
 
     }
-
-
-
 
 }

@@ -154,19 +154,6 @@ class Visual {
         }
     }
 
-    clickPlay(mx, my, newImage, song) {
-        if (song.isPlaying()) {
-                if (this._play.clicker2(mx, my) && this._pauseSong === false) {
-                    console.log("holi")
-                    this._pauseSong = true;
-                    this._play.image = newImage;
-                } 
-            } else {
-                this._play.image = this._playImage;
-                this._pauseSong = false;
-        }
-    }
-
     click0(mx, my) {
         if (this._screen === 0) {
             if (this._buttomSongs.clicker(mx, my)) {
