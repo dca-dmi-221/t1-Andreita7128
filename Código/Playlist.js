@@ -1,10 +1,9 @@
 class Playlist {
     
     constructor({songs,name}) {
-        this._songs = [];
+        this._songs = songs;
         this._name = name;
         this._playing = false;
-        this._songs.push(songs)
         console.log(this._songs)
 
     }

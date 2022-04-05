@@ -13,10 +13,7 @@ class Song {
         this._y = y;
         this._b = undefined
         this._h = 20;
-        this._playing = false;
         this.lengthClick();
-
-
     }
 
     
@@ -25,7 +22,7 @@ class Song {
     }
 
     lengthClick(){
-       this._b = (String(this.name).length * 15) + (String(this.author).length * 15)
+       this._b = (String(this.name).length * 15) + (String(this.author).length * 15);
     }
 
     get x(){
@@ -47,9 +44,6 @@ class Song {
     get file() {
         return this._file;
     }
-    get playing() {
-        return this._playing;
-    }
 
     set x(newX){
         this._x = newX;
@@ -57,7 +51,5 @@ class Song {
     set y(newY){
         this._y = newY;
     }
-    set playing(newP){
-        this._playing = newP;
-    }
+
 }

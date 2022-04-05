@@ -3,13 +3,10 @@ class Visual {
     constructor(screen) {
         this._screen = screen;
         this._miniPlayerOpen = false;
-        this._pauseSong = false;
-        this._sliderVolume = createSlider(-1, 10);
         this._bg = loadImage('./Images/bg1.jpg');
         this._bg2 = loadImage('./Images/bg2.jpg');
         this._bg3 = loadImage('./Images/bg3.jpg');
         this._bg4 = loadImage('./Images/bg4.jpg');
-        this._playImage = loadImage('./Images/play.png');
 
         this._home = new Buttom({
             x: 30,
@@ -35,7 +32,7 @@ class Visual {
             x: 980,
             y: 635,
             b: 35,
-            image: this._playImage
+            image: loadImage('./Images/play.png')
         });
         this._next = new Buttom({
             x: 1015,
@@ -104,7 +101,6 @@ class Visual {
         this.screen0();
         this.screen1();
         this.screen2();
-        this.screen3();
         this._home.showCorner();
         this.openMiniPlayer();
 
@@ -127,12 +123,6 @@ class Visual {
 
     screen2() {
         if (this._screen === 2) {
-            image(this._bg3, 0, 0);
-        }
-    }
-
-    screen3() {
-        if (this._screen === 3) {
             image(this._bg4, 0, 0);
             this._playlist1.showCenter();
             this._playlist2.showCenter();
@@ -147,8 +137,6 @@ class Visual {
             this._next.showCorner();
             this._back.showCorner();
             this._play.showCorner();
-            this._sliderVolume.position(1115, 645);
-
         } else {
             this._accessPlayer.showCenter();
         }
@@ -160,7 +148,7 @@ class Visual {
                 this._screen = 1;
             }
             if (this._buttomPlaylist.clicker(mx, my)) {
-                this._screen = 3;
+                this._screen = 2;
             }
         }
     }
@@ -190,6 +178,9 @@ class Visual {
         }
     }
 
+    clickPlay(mx, my) {
+        return this._play.clicker2(mx, my)
+    }
 
 
 
@@ -199,6 +190,10 @@ class Visual {
 
     get screen() {
         return this._screen;
+    }
+
+    get _sliderVolume(){
+        return this._sliderVolume;
     }
 
     set miniPlayerOpen(newValue) {
@@ -211,3 +206,4 @@ class Visual {
 
 
 }
+

@@ -30,18 +30,7 @@ class Buttom {
         return mx > this._x && mx < (this._x + this._b) && my > this._y && my < (this._y + this._h);
     }
 
-    clickPlay(mx, my, newImage, song) {
-        if (song.playing === true) {
-            console.log("holi")
-                if (this._play.clicker2(mx, my) && this._pauseSong === false) {
-                    this._pauseSong = true;
-                    this._play.image = newImage;
-                } 
-            } else {
-                this._play.image = this._playImage;
-                this._pauseSong = false;
-        }
-    }
+    
 
     set image(newValue) {
         this._image = newValue;

@@ -28,20 +28,34 @@ class App {
 
     constructor(preloadedFiles) {
         this._songs = []; //arreglo para mostrar las canciones en general
+        this._allPlaylist = [];
         this._playSong = undefined; //canción sonando actualmente
         this._visual = new Visual(0);
-        this._pauseImage = loadImage('./Images/pause.png');
+        this._sliderVolume = createSlider(0,1,0.5,0.01);
+
         this._playlist1Songs = [];
         this._playlist2Songs = [];
-        this._playlist1 = []
-        /*this._songs.forEach((song,index) => {
-            if(index % 2 === 0){
-                this._playlist1.push(new PluginArray)
-            }
-            
-        });*/
 
-        this._playlist2 = new Playlist(this._playlist2Songs);
+        this._playlist1Songs.push(this._songs[0]);
+        this._playlist1Songs.push(this._songs[2]);
+        this._playlist1Songs.push(this._songs[4]);
+
+        this._playlist2Songs.push(this._songs[1]);
+        this._playlist2Songs.push(this._songs[3]);
+        this._playlist2Songs.push(this._songs[5]);
+
+        this._playlist1 = new Playlist({
+            songs: this._playlist1Songs,
+            name: `Playlist 1`
+        })
+        this._playlist2 = new Playlist({
+            songs: this._playlist2Songs,
+            name: `Playlist2`
+        });
+
+        this._allPlaylist.push(this._playlist1);
+        this._allPlaylist.push(this._playlist2);
+
 
         const input = document.querySelector('#load-song'); //para abrir el explorador
 
@@ -68,14 +82,7 @@ class App {
             }))
         })
 
-        this._playlist1Songs.push(this._songs[0]);
-        this._playlist1Songs.push(this._songs[2])
-        this._playlist1Songs.push(this._songs[4])
-
-
-        this._playlist2Songs.push(this._songs[1])
-        this._playlist2Songs.push(this._songs[3])
-        this._playlist2Songs.push(this._songs[5])
+        
 
         console.log(this._playlist1);
     }
@@ -83,6 +90,7 @@ class App {
     draw() {
         this._visual.screens();
         this.showSongs();
+        this.infoMiniPlayer();
     }
 
     pressed() {
@@ -92,8 +100,8 @@ class App {
         this._visual.clickUploadSong(mouseX, mouseY);
         this._visual.clickOpen(mouseX, mouseY);
         this._visual.clickClose(mouseX, mouseY);
-        this._visual.clickPlay(mouseX,mouseY,this._pauseImage,this._playSong);
         this.clickerSong();
+        this.pauseSong();
     }
 
     showSongs() {
@@ -105,7 +113,7 @@ class App {
                 song.y = (30 * i) + 270;
                 fill(255)
                 textSize(15);
-                text(song.name + ' (' + song.author + ') ' + (song.file.duration() / 60).toFixed(2) + 'min', song.x, song.y);
+                text(`${song.name} (${song.author}) ${(song.file.duration() / 60).toFixed(2)} min`, song.x, song.y);
             }
         }
     }
@@ -115,14 +123,47 @@ class App {
             for (let i = 0; i < this._songs.length; i++) {
                 const song = this._songs[i];
                 if (song.clicker(mouseX, mouseY)) {
+                    if (this._playSong !== undefined) {
+                        this._playSong.file.stop();
+                    }
                     this._playSong = this._songs[i];
                     this._playSong.file.play();
-                    this._playSong.playing = true;
                     this._visual.miniPlayerOpen = true;
                 }
             }
         }
 
     }
+
+    pauseSong() {
+        if (this._visual.clickPlay(mouseX, mouseY)) {
+            if (this._playSong.file.isPlaying()) {
+                this._playSong.file.pause();
+            } else {
+                this._playSong.file.play();
+            }
+        }
+    }
+
+    infoMiniPlayer() {
+        if (this._visual.miniPlayerOpen === true) {
+            this._sliderVolume.position(1115, 645);
+            if (this._playSong !== undefined && this._playSong.file.isPlaying()) {
+                fill(255);
+                textSize(16);
+                text(`Está sonando ${this._playSong.name}`, 960, 620);
+                textSize(12);
+                text((this._playSong.file.duration() / 60).toFixed(2), 1250, 688);
+                this._playSong.file.setVolume((this._sliderVolume.value()));
+            }
+        } 
+    }
+
+    closeSlider(){
+        if(this._visual.miniPlayerOpen === false){
+            this._sliderVolume.style(`display`,`none`);
+        }
+    }
+    
 
 }
