@@ -59,6 +59,7 @@ class App {
         this._allPlaylist = [];
         this._playSong = undefined; //canción sonando actualmente
         this._playlistActual = undefined;
+        this._playlistSound = false;
         this._visual = new Visual(0);
         this._sliderVolume = createSlider(0, 1, 0.5, 0.01);
 
@@ -90,6 +91,7 @@ class App {
 
     draw() {
         this._visual.screens();
+        this._visual.screenError();
         this.showSongs();
         this.infoMiniPlayer();
         this.showPlaylist();
@@ -105,7 +107,11 @@ class App {
         this._visual.clickClose(mouseX, mouseY);
         this.clickerSong();
         this.pauseSong();
+        this.stopSong();
         this.clickerPlaylist();
+        this.clickerPlaylistSong();
+        this.next();
+        this.back();
     }
 
     showSongs() {
@@ -133,15 +139,15 @@ class App {
                     }
                     this._playSong = this._songs[i];
                     this._playSong.file.play();
+                    this._playlistSound = false;
                     this._visual.miniPlayerOpen = true;
                 }
             }
         }
-
     }
 
     pauseSong() {
-        if (this._visual.clickPlay(mouseX, mouseY)) {
+        if (this._visual.clickPlay(mouseX, mouseY) && this._visual.miniPlayerOpen === true) {
             if (this._playSong.file.isPlaying()) {
                 this._playSong.file.pause();
             } else {
@@ -150,18 +156,27 @@ class App {
         }
     }
 
+    stopSong() {
+        if (this._visual.clickStop(mouseX, mouseY) && this._visual.miniPlayerOpen === true) {
+            this._playSong.file.stop();
+        }
+    }
+
     infoMiniPlayer() {
         if (this._visual.miniPlayerOpen === true) {
             this._sliderVolume.position(1115, 645);
-            if (this._playSong !== undefined && this._playSong.file.isPlaying()) {
+            if (this._playSong !== undefined) {
                 fill(255);
                 textSize(16);
                 text(`Está sonando ${this._playSong.name}`, 960, 620);
                 textSize(12);
                 text((this._playSong.file.duration() / 60).toFixed(2), 1250, 688);
+                text((this._playSong.file.currentTime() / 60).toFixed(2), 928, 688)
                 this._playSong.file.setVolume((this._sliderVolume.value()));
             }
-        }
+        } //else {
+        //this._sliderVolume.style(`display`,`none`);
+        //    }
     }
 
     closeSlider() {
@@ -193,24 +208,64 @@ class App {
 
     showSongsPlaylist() {
         if (this._visual.screen === 3) {
-            this._playlistActual.songs.forEach((song,i) => {
+            this._playlistActual.songs.forEach((song, i) => {
                 // if(i % 15 === 0){
-            song.x = 40;
-            song.y = (30 * i) + 270;
-            fill(255)
-            textAlign(CORNER, CORNER);
-            textSize(15);
-            text(`${song.name} (${song.author}) ${(song.file.duration() / 60).toFixed(2)} min`, song.x, song.y);
+                song.x = 40;
+                song.y = (30 * i) + 270;
+                fill(255)
+                textAlign(CORNER, CORNER);
+                textSize(15);
+                text(`${song.name} (${song.author}) ${(song.file.duration() / 60).toFixed(2)} min`, song.x, song.y);
             });
-            
         }
     }
 
+    clickerPlaylistSong() {
+        if (this._visual.screen === 3) {
+            this._playlistActual.songs.forEach(song => {
+                if (song.clicker(mouseX, mouseY)) {
+                    if (this._playSong !== undefined) {
+                        this._playSong.file.stop();
+                    }
+                    this._playSong = song;
+                    this._playSong.file.play();
+                    this._playlistSound = true;
+                    this._visual.miniPlayerOpen = true;
+                }
+            });
+        }
+    }
+
+    next() {
+        if (this._visual.miniPlayerOpen === true) {
+            for (let i = 0; i < this._playlistActual.songs.length; i++) {
+                if (this._visual.clickNext(mouseX, mouseY) && this._playlistSound === true) {
+                    this._playSong.file.stop();
+                    this._playSong = this._playlistActual.songs[i++];
+                    this._playSong.file.play();
+                }
+            }
+        }
+    }
+
+    back() {
+        if (this._visual.miniPlayerOpen === true) {
+            for (let i = 0; i < this._playlistActual.songs.length; i++) {
+                if (this._visual.clickBack(mouseX, mouseY) && this._playlistSound === true) {
+                    this._playSong.file.stop();
+                    this._playSong = this._playlistActual.songs[i--];
+                    this._playSong.file.play();
+                }
+            }
+        }
+    }
 }
 
-// this._playSong = playlist[i]
-//                     if (this._playSong !== undefined) {
-//                         this._playSong.file.stop();
-//                     }
-//                     this._playSong.file.play();
-//                     this._visual.miniPlayerOpen = true;
+
+
+    // this._playSong = playlist[i]
+    //                     if (this._playSong !== undefined) {
+    //                         this._playSong.file.stop();
+    //                     }
+    //                     this._playSong.file.play();
+    //                     this._visual.miniPlayerOpen = true;

@@ -3,10 +3,13 @@ class Visual {
     constructor(screen) {
         this._screen = screen;
         this._miniPlayerOpen = false;
+        this._error = false;
         this._bg = loadImage('./Images/bg1.jpg');
         this._bg2 = loadImage('./Images/bg2.jpg');
         this._bg3 = loadImage('./Images/bg3.jpg');
         this._bg4 = loadImage('./Images/bg4.jpg');
+
+
 
         this._home = new Buttom({
             x: 30,
@@ -34,8 +37,14 @@ class Visual {
             b: 35,
             image: loadImage('./Images/play.png')
         });
-        this._next = new Buttom({
+        this._stop = new Buttom({
             x: 1015,
+            y: 635,
+            b: 35,
+            image: loadImage('./Images/stop.png')
+        });
+        this._next = new Buttom({
+            x: 1050,
             y: 642,
             b: 20,
             h: 25,
@@ -80,6 +89,13 @@ class Visual {
             b: 217,
             image: loadImage('./Images/add.png')
         });
+        this._errorImage = new Buttom({
+            x: 50,
+            y: 50,
+            b: 1150,
+            h: 642,
+            image: loadImage('./Images/error.png')
+        });
     }
 
     screens() {
@@ -89,7 +105,6 @@ class Visual {
         this.screen3();
         this._home.showCorner();
         this.openMiniPlayer();
-
     }
 
     screen0() {
@@ -127,8 +142,15 @@ class Visual {
             this._next.showCorner();
             this._back.showCorner();
             this._play.showCorner();
+            this._stop.showCorner();
         } else {
             this._accessPlayer.showCenter();
+        }
+    }
+
+    screenError() {
+        if (this._error === true) {
+            this._errorImage.showCorner();
         }
     }
 
@@ -168,8 +190,24 @@ class Visual {
         }
     }
 
+    clickError(mx, my) {
+        return this._errorImage.clicker2(mx, my)
+    }
+
     clickPlay(mx, my) {
         return this._play.clicker2(mx, my)
+    }
+
+    clickStop(mx, my) {
+        return this._stop.clicker2(mx, my)
+    }
+
+    clickNext(mx, my) {
+        return this._next.clicker2(mx, my);
+    }
+
+    clickBack(mx, my) {
+        return this._back.clicker2(mx, my);
     }
 
 
@@ -182,8 +220,12 @@ class Visual {
         return this._screen;
     }
 
-    get _sliderVolume(){
-        return this._sliderVolume;
+    get error() {
+        return this._error;
+    }
+
+    set error(newValue) {
+        this._error = newValue;
     }
 
     set miniPlayerOpen(newValue) {
@@ -196,4 +238,3 @@ class Visual {
 
 
 }
-

@@ -16,20 +16,20 @@ class Song {
         this.lengthClick();
     }
 
-    
+
     clicker(mx, my) {
         return mx > this._x && mx < (this._x + this._b) && my > this._y - 20 && my < ((this._y - 20) + this._h);
     }
 
-    lengthClick(){
-       this._b = (String(this.name).length * 15) + (String(this.author).length * 15);
+    lengthClick() {
+        this._b = (String(this.name).length * 15) + (String(this.author).length * 15);
     }
 
-    get x(){
+    get x() {
         return this._x;
     }
 
-    get y(){
+    get y() {
         return this._y;
     }
 
@@ -45,10 +45,10 @@ class Song {
         return this._file;
     }
 
-    set x(newX){
+    set x(newX) {
         this._x = newX;
     }
-    set y(newY){
+    set y(newY) {
         this._y = newY;
     }
 
