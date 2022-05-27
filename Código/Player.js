@@ -18,6 +18,6 @@ function mousePressed() {
 
 function preload() {
   for (let i = 0; i < totalSongs; i++) {
-    songFiles.push(loadSound('/Songs/cancion' + i + '.mp3'));
+    songFiles.push(loadSound('./Songs/cancion' + i + '.mp3'));
   }
 }
